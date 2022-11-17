@@ -21,4 +21,8 @@ class ApplicationController < ActionController::Base
   def clarencehouse?
     false
   end
+
+  def number_to_currency(price)
+    ActionController::Base.helpers.number_to_currency(price)
+  end
 end
