@@ -75,7 +75,7 @@ module PricingHelper
 
     def uom_display_text?
       if product.measured_unit["uom_display_text"].present?
-        return "#{number_to_currency(price)} #{humanized_currency(currency)} #{product.measured_unit["uom_display_text"]}"
+        return "#{helpers.number_to_currency(price)} #{humanized_currency(currency)} #{product.measured_unit["uom_display_text"]}"
       end
     end
 
@@ -105,25 +105,25 @@ module PricingHelper
       end
 
       if unit == "sglrl" && display_for != :quick
-        content = "#{number_to_currency(price)} #{humanized_currency(currency)} per single roll (#{sold_as_units(product)})"
+        content = "#{helpers.number_to_currency(price)} #{humanized_currency(currency)} per single roll (#{sold_as_units(product)})"
       elsif unit == "sglrl" && product.product_type == "wallcovering"
-        content = helpers.content_tag(:span, "#{number_to_currency(price)} / ")
+        content = helpers.content_tag(:span, "#{helpers.number_to_currency(price)} / ")
         content << helpers.content_tag(:small, "Single Roll #{humanized_currency(currency)}")
       else
         separator = clarencehouse? ? "per" : "/"
-        content = "#{number_to_currency(price)} #{separator} #{unit} #{humanized_currency(currency)}"
+        content = "#{helpers.number_to_currency(price)} #{separator} #{unit} #{humanized_currency(currency)}"
       end
 
       if sqft_context?
-        content = helpers.content_tag(:span, "#{number_to_currency(sqft_unit_total)} #{humanized_currency(currency)} per unit", class: "per_unit_pricing")
-        content << helpers.content_tag(:span, "#{number_to_currency(price)} #{humanized_currency(currency)} per sq.ft.", class: "per_sqft_pricing")
+        content = helpers.content_tag(:span, "#{helpers.number_to_currency(sqft_unit_total)} #{humanized_currency(currency)} per unit", class: "per_unit_pricing")
+        content << helpers.content_tag(:span, "#{helpers.number_to_currency(price)} #{humanized_currency(currency)} per sq.ft.", class: "per_sqft_pricing")
       end
 
       if options["display_type"] == "available rug pad"
         if sqft_context?
-          content = "#{number_to_currency(sqft_unit_total)} #{humanized_currency(currency)}"
+          content = "#{helpers.number_to_currency(sqft_unit_total)} #{humanized_currency(currency)}"
         else
-          content = "#{number_to_currency(price)} #{humanized_currency(currency)}"
+          content = "#{helpers.number_to_currency(price)} #{humanized_currency(currency)}"
         end
       end
 
