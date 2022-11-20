@@ -6,8 +6,8 @@ module ApiHelper
       pricing: {
         retail: {
           base: {
-            usd: product.base_price__retail(:usd, :unit, :single),
-            cad: product.base_price__retail(:cad, :unit, :single)
+            usd: product.base_price_retail(:usd, :unit, :single),
+            cad: product.base_price_retail(:cad, :unit, :single)
           },
           markup: {
             usd: product.retail_price(account: account, currency: :usd, unit: :unit, type: :single),
@@ -20,8 +20,8 @@ module ApiHelper
         },
         net: {
           base: {
-            usd: product.base_price__net(:usd, :unit, :single),
-            cad: product.base_price__net(:cad, :unit, :single)
+            usd: product.base_price_net(:usd, :unit, :single),
+            cad: product.base_price_net(:cad, :unit, :single)
           },
           account_cost: {
             usd: product.your_price_net(account, :usd, :unit),
@@ -36,9 +36,9 @@ module ApiHelper
             cad: product.your_price_net(account, :cad, :halfpiece)
           },
           customer: {
-            unit: product.order_price__net(current_user, :unit),
-            piece: product.order_price__net(current_user, :piece),
-            halfpiece: product.order_price__net(current_user, :halfpiece)
+            unit: product.order_price_net(current_user, :unit),
+            piece: product.order_price_net(current_user, :piece),
+            halfpiece: product.order_price_net(current_user, :halfpiece)
           }
         }
       },

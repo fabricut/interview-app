@@ -51,7 +51,7 @@ class Product < ApplicationRecord
     account&.export? && unit != :unit ? "per_#{unit}_export" : "per_#{unit}"
   end
 
-  def base_price__net(currency = :usd, unit = :unit, type = :single, account = nil)
+  def base_price_net(currency = :usd, unit = :unit, type = :single, account = nil)
     currency = ([currency.to_s.to_sym] & [:usd, :cad]).pop
     unit = ([unit.to_s.to_sym] & [:unit, :piece, :halfpiece]).pop
     type = account&.export? ? :export : ([type.to_s.to_sym] & [:single, :tiered, :export]).pop
@@ -75,8 +75,8 @@ class Product < ApplicationRecord
     end
   end
 
-  def base_price__retail(currency = :usd, unit = :unit, type = :single, account = nil)
-    price = base_price__net(currency, unit, type, account)
+  def base_price_retail(currency = :usd, unit = :unit, type = :single, account = nil)
+    price = base_price_net(currency, unit, type, account)
     return nil if price.nil?
 
     case type
@@ -96,7 +96,7 @@ class Product < ApplicationRecord
     type = ([type.to_s.to_sym] & [:single, :tiered, :export]).pop
 
     markup = Markup.find_for_product(account: account, product: self)
-    price = base_price__net(currency, unit, type, account)
+    price = base_price_net(currency, unit, type, account)
     return nil if price.nil?
 
     case type
@@ -132,7 +132,7 @@ class Product < ApplicationRecord
     markup.apply_to(price)
   end
 
-  def order_price__net(user, unit = :unit, promo_code = nil)
+  def order_price_net(user, unit = :unit, promo_code = nil)
     pricing = order_pricing(user: user, unit: unit, promo_code: promo_code)
     pricing&.dig("order_price")
   end
